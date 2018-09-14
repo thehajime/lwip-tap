@@ -224,6 +224,7 @@ main(int argc,char *argv[])
       if (n == 0)
         netif_set_default(&netif[n]);
       netif_set_up(&netif[n]);
+      netif_set_link_up(&netif[n]);
       if (IP4_OR_NULL(tapif[n].ip_addr) == 0 &&
           IP4_OR_NULL(tapif[n].netmask) == 0 &&
           IP4_OR_NULL(tapif[n].gw) == 0)
