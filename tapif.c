@@ -41,6 +41,7 @@
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <sys/socket.h>
+#include <arpa/inet.h>
 
 
 #include "lwip/debug.h"
@@ -53,6 +54,7 @@
 #include "lwip/sys.h"
 
 #include "netif/etharp.h"
+#include "lwip/ethip6.h"
 
 #if defined(LWIP_DEBUG) && defined(LWIP_TCPDUMP)
 #include "netif/tcpdump.h"
@@ -186,14 +188,14 @@ low_level_init(struct netif *netif,const char *name)
   if (name == NULL) {
     sprintf(buf, IFCONFIG_BIN IFCONFIG_ARGS,
             ifr.ifr_name,
-            ip4_addr1(&(netif->gw)),
-            ip4_addr2(&(netif->gw)),
-            ip4_addr3(&(netif->gw)),
-            ip4_addr4(&(netif->gw)),
-            ip4_addr1(&(netif->netmask)),
-            ip4_addr2(&(netif->netmask)),
-            ip4_addr3(&(netif->netmask)),
-            ip4_addr4(&(netif->netmask)));
+            ip4_addr1(netif_ip4_gw(netif)),
+            ip4_addr2(netif_ip4_gw(netif)),
+            ip4_addr3(netif_ip4_gw(netif)),
+            ip4_addr4(netif_ip4_gw(netif)),
+            ip4_addr1(netif_ip4_netmask(netif)),
+            ip4_addr2(netif_ip4_netmask(netif)),
+            ip4_addr3(netif_ip4_netmask(netif)),
+            ip4_addr4(netif_ip4_netmask(netif)));
 
     LWIP_DEBUGF(TAPIF_DEBUG, ("tapif_init: system(\"%s\");\n", buf));
     system(buf);
@@ -365,6 +367,7 @@ tapif_input(struct netif *netif)
   /* IP or ARP packet? */
   case ETHTYPE_IP:
   case ETHTYPE_ARP:
+  case ETHTYPE_IPV6:
 #if PPPOE_SUPPORT
   /* PPPoE packet? */
   case ETHTYPE_PPPOEDISC:
@@ -418,6 +421,7 @@ tapif_init(struct netif *netif)
   netif->name[1] = IFNAME1;
   netif->output = etharp_output;
   netif->linkoutput = low_level_output;
+  netif->output_ip6 = ethip6_output;
   netif->mtu = 1500;
   /* hardware address length */
   netif->hwaddr_len = 6;

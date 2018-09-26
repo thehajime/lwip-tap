@@ -78,6 +78,15 @@ SOURCES = \
   lwip/src/apps/snmp/snmp_mib2.c \
   lwip/src/core/ipv4/etharp.c \
   lwip/src/netif/ethernet.c \
+  lwip/src/core/ipv6/dhcp6.c \
+  lwip/src/core/ipv6/ethip6.c \
+  lwip/src/core/ipv6/icmp6.c \
+  lwip/src/core/ipv6/inet6.c \
+  lwip/src/core/ipv6/ip6.c \
+  lwip/src/core/ipv6/ip6_addr.c \
+  lwip/src/core/ipv6/ip6_frag.c \
+  lwip/src/core/ipv6/mld6.c \
+  lwip/src/core/ipv6/nd6.c \
   lwip-contrib/ports/unix/port/sys_arch.c \
   lwip-contrib/apps/chargen/chargen.c \
   lwip-contrib/apps/httpserver/httpserver-netconn.c \

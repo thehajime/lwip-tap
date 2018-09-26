@@ -86,7 +86,7 @@ parse_pair(struct tapif* tapif,char* key,char* value)
     if (parse_address(value,&addr,AF_INET) != 0)                  \
       return -1;                                                  \
     p = (uint8_t*)&((struct sockaddr_in*)addr.ai_addr)->sin_addr; \
-    IP4_ADDR(&(ip_addr),*p,*(p+1),*(p+2),*(p+3));                 \
+    IP4_ADDR(&(ip_addr.u_addr.ip4),*p,*(p+1),*(p+2),*(p+3));                 \
     return 0;                                                     \
   } while(0)
 
@@ -172,7 +172,7 @@ help(void)
   exit(0);
 }
 
-#define IP4_OR_NULL(ip_addr) ((ip_addr).addr == IPADDR_ANY ? 0 : &(ip_addr))
+#define IP4_OR_NULL(ip_addr) ((ip_addr).u_addr.ip4.addr == IPADDR_ANY ? 0 : &(ip_addr.u_addr.ip4))
 
 int
 main(int argc,char *argv[])
@@ -224,6 +224,8 @@ main(int argc,char *argv[])
       if (n == 0)
         netif_set_default(&netif[n]);
       netif_set_up(&netif[n]);
+      netif_create_ip6_linklocal_address(&netif[n], 1);
+      netif_default->ip6_autoconfig_enabled = 1;
       netif_set_link_up(&netif[n]);
       if (IP4_OR_NULL(tapif[n].ip_addr) == 0 &&
           IP4_OR_NULL(tapif[n].netmask) == 0 &&

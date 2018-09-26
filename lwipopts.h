@@ -107,7 +107,7 @@ a lot of data that needs to be copied, this should be set high. */
 #define MEMP_NUM_TCP_SEG        16
 /* MEMP_NUM_SYS_TIMEOUT: the number of simulateously active
    timeouts. */
-#define MEMP_NUM_SYS_TIMEOUT    5
+#define MEMP_NUM_SYS_TIMEOUT    10
 
 /* The following four are used only with the sequential API and can be
    set to 0 if the application only will use the raw API. */
@@ -123,10 +123,10 @@ a lot of data that needs to be copied, this should be set high. */
 
 /* ---------- Pbuf options ---------- */
 /* PBUF_POOL_SIZE: the number of buffers in the pbuf pool. */
-#define PBUF_POOL_SIZE          120
+#define PBUF_POOL_SIZE          480
 
 /* PBUF_POOL_BUFSIZE: the size of each pbuf in the pbuf pool. */
-#define PBUF_POOL_BUFSIZE       128
+#define PBUF_POOL_BUFSIZE       512
 
 /* PBUF_LINK_HLEN: the number of bytes that should be allocated for a
    link level header. */
@@ -307,5 +307,49 @@ a lot of data that needs to be copied, this should be set high. */
 #define MAXSECRETLEN    256     /* max length of password or secret */
 
 #endif /* PPP_SUPPORT > 0 */
+
+#define LWIP_IPV6 1
+#define IPV6_FRAG_COPYHEADER 1
+#define LWIP_IPV6_DUP_DETECT_ATTEMPTS 1
+#define LWIP_MULTICAST_PING 1
+#define IPV6_REASS_MAXAGE               60
+#define LWIP_IPV6_SCOPES                (LWIP_IPV6 && !LWIP_SINGLE_NETIF)
+#define LWIP_IPV6_SCOPES_DEBUG          0
+#define LWIP_IPV6_NUM_ADDRESSES         3
+#define LWIP_IPV6_FORWARD               0
+#define LWIP_IPV6_FRAG                  1
+#define LWIP_IPV6_REASS                 (LWIP_IPV6)
+#define LWIP_IPV6_SEND_ROUTER_SOLICIT   1
+#define LWIP_IPV6_AUTOCONFIG            (LWIP_IPV6)
+#define LWIP_IPV6_ADDRESS_LIFETIMES     (LWIP_IPV6_AUTOCONFIG)
+#define LWIP_IPV6_DUP_DETECT_ATTEMPTS   1
+#define LWIP_ICMP6                      (LWIP_IPV6)
+#define LWIP_ICMP6_DATASIZE             8
+#define LWIP_ICMP6_HL                   255
+#define LWIP_IPV6_MLD                   (LWIP_IPV6)
+#define MEMP_NUM_MLD6_GROUP             4
+#define LWIP_ND6_QUEUEING               (LWIP_IPV6)
+#define MEMP_NUM_ND6_QUEUE              20
+#define LWIP_ND6_NUM_NEIGHBORS          10
+#define LWIP_ND6_NUM_DESTINATIONS       10
+#define LWIP_ND6_NUM_PREFIXES           5
+#define LWIP_ND6_NUM_ROUTERS            3
+#define LWIP_ND6_MAX_MULTICAST_SOLICIT  3
+#define LWIP_ND6_MAX_UNICAST_SOLICIT    3
+#define LWIP_ND6_MAX_ANYCAST_DELAY_TIME 1000
+#define LWIP_ND6_MAX_NEIGHBOR_ADVERTISEMENT  3
+#define LWIP_ND6_REACHABLE_TIME         30000
+#define LWIP_ND6_RETRANS_TIMER          1000
+#define LWIP_ND6_DELAY_FIRST_PROBE_TIME 5000
+#define LWIP_ND6_ALLOW_RA_UPDATES       1
+#define LWIP_ND6_TCP_REACHABILITY_HINTS 1
+#define LWIP_ND6_RDNSS_MAX_DNS_SERVERS  0
+#define LWIP_IPV6_DHCP6                 0
+#define LWIP_IPV6_DHCP6_STATEFUL        0
+#define LWIP_IPV6_DHCP6_STATELESS       LWIP_IPV6_DHCP6
+#define LWIP_DONT_PROVIDE_BYTEORDER_FUNCTIONS 1
+#define IP6_DEBUG                       LWIP_DBG_ON
+#define ICMP_DEBUG                       LWIP_DBG_ON
+#define NETIF_DEBUG                      LWIP_DBG_ON
 
 #endif /* __LWIPOPTS_H__ */
